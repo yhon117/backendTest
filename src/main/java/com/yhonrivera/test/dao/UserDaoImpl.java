@@ -53,14 +53,10 @@ public class UserDaoImpl implements UsuarioDao{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Usuario> finAllnd() {
-        String jpql = "SELECT new com.yhonrivera.test.model(u.cedula, u.primer_nombre, u.segundo_nombre, u.primer_apellido" +
-                ",u.segundo_apellido, u.email, u.clave, u.estado, e.nit, e.nombre, r.rol) " +
-                "FROM usuario u " +
-                "JOIN u.empresa e " +
-                "JOIN u.roles r";
+        String jpql = "SELECT u FROM Usuario u JOIN FETCH u.empresa e JOIN FETCH u.roles r";
         TypedQuery<Usuario> query = manager.createQuery(jpql, Usuario.class);
-
         return query.getResultList();
     }
 

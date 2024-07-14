@@ -7,6 +7,7 @@ import com.yhonrivera.test.service.IUsuarioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,8 +20,8 @@ public class UsuarioServiceIpmpl implements IUsuarioService {
     @Autowired
     private UsuarioDao usuarioDao;
 
-    private static final Logger logger = Logger.getLogger(Usuario.class.getName());
-
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     public UsuarioDto save(UsuarioDto usuarioDto) {
         try{
@@ -38,13 +39,20 @@ return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UsuarioDto> finAlld() {
+        List<Usuario> usuarios = usuarioDao.finAllnd();
 
-
-        ModelMapper modelMapper = new ModelMapper();
-
-        return this.usuarioDao.finAllnd().stream()
-                .map(Usuario->modelMapper.map(Usuario,UsuarioDto.class))
+        // Convertir lista de Usuario a lista de UsuarioDto usando ModelMapper
+        return usuarios.stream()
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    private UsuarioDto convertToDto(Usuario usuario) {
+        UsuarioDto usuarioDto = modelMapper.map(usuario, UsuarioDto.class);
+        usuarioDto.setEmpresa(usuario.getEmpresa().getNombre());
+        usuarioDto.setRoles(usuario.getRoles().getId());
+        return usuarioDto;
     }
 }

@@ -39,6 +39,23 @@ public class Usuario {
         this.roles = roles;
         this.estado = estado;
     }
+    public Usuario(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
+                   String clave, String email, String nit, String nombre, Long rol, int estado) {
+        this.cedula = cedula;
+        this.primerNombre = primerNombre;
+        this.segundoNombre = segundoNombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+        this.clave = clave;
+        this.email = email;
+        this.empresa = new Empresa();
+        this.empresa.setNit(nit);
+        this.empresa.setNombre(nombre);
+        this.roles = new Roles();
+        this.roles.setId(rol);
+        this.estado = estado;
+    }
+
 
     public String getCedula() {
         return cedula;
@@ -120,19 +137,4 @@ public class Usuario {
         this.estado = estado;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "cedula='" + cedula + '\'' +
-                ", primerNombre='" + primerNombre + '\'' +
-                ", segundoNombre='" + segundoNombre + '\'' +
-                ", primerApellido='" + primerApellido + '\'' +
-                ", segundoApellido='" + segundoApellido + '\'' +
-                ", clave='" + clave + '\'' +
-                ", email='" + email + '\'' +
-                ", empresa=" + empresa +
-                ", roles=" + roles +
-                ", estado=" + estado +
-                '}';
-    }
 }
