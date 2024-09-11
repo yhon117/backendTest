@@ -1,10 +1,7 @@
 package com.yhonrivera.test.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Primary;
+
 
 @Entity
 @Table(name = "usuario")
@@ -40,7 +37,7 @@ public class Usuario {
         this.estado = estado;
     }
     public Usuario(String cedula, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido,
-                   String clave, String email, String nit, String nombre, Long rol, int estado) {
+                   String clave, String email, String nit, String nombre, String rol, int estado) {
         this.cedula = cedula;
         this.primerNombre = primerNombre;
         this.segundoNombre = segundoNombre;
@@ -52,7 +49,7 @@ public class Usuario {
         this.empresa.setNit(nit);
         this.empresa.setNombre(nombre);
         this.roles = new Roles();
-        this.roles.setId(rol);
+        this.roles.setRol(rol);
         this.estado = estado;
     }
 
